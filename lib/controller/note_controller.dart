@@ -7,7 +7,7 @@ import 'package:todo_list_getx/model/note_model.dart';
 
 class NoteController extends GetxController {
   late Box<NoteModel> notesData;
-  
+
   NoteController() {
     getAllNotes();
   }

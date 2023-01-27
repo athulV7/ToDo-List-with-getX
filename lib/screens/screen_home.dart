@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:todo_list_getx/controller/note_controller.dart';
 import 'package:todo_list_getx/model/note_model.dart';
 import 'package:todo_list_getx/screens/screen_search.dart';
@@ -18,12 +19,18 @@ class ScreenHome extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text('TO DO'),
+        title: Text(
+          'TO DO',
+          style: GoogleFonts.maidenOrange(fontSize: 25),
+        ),
         centerTitle: true,
         elevation: 0,
         actions: [
           IconButton(
-            onPressed: () => Get.to(SearchScreen()),
+            onPressed: () => Get.to(
+              SearchScreen(),
+              transition: Transition.cupertino,
+            ),
             icon: const Icon(Icons.search),
           )
         ],
