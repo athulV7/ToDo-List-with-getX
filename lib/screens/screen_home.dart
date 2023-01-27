@@ -37,54 +37,57 @@ class ScreenHome extends StatelessWidget {
       body: GetBuilder<NoteController>(
         builder: (controller) => Padding(
           padding: const EdgeInsets.all(20.0),
-          child: ListView.separated(
-            itemCount: noteController.notelist.length,
-            itemBuilder: (context, index) {
-              return Slidable(
-                startActionPane: ActionPane(
-                  motion: const StretchMotion(),
-                  children: [
-                    SlidableAction(
-                      backgroundColor: Colors.grey.shade700,
-                      icon: Icons.edit_note_outlined,
-                      label: 'Edit',
-                      onPressed: (context) {
-                        showDialog(
-                          context: context,
-                          builder: (context) => UpdateNoteWidget(
-                            index: index,
-                            model: noteController.notelist[index],
+          child: noteController.notelist.isEmpty
+              ? Container()
+              : ListView.separated(
+                  itemCount: noteController.notelist.length,
+                  itemBuilder: (context, index) {
+                    return Slidable(
+                      startActionPane: ActionPane(
+                        motion: const StretchMotion(),
+                        children: [
+                          SlidableAction(
+                            backgroundColor: Colors.grey.shade700,
+                            icon: Icons.edit_note_outlined,
+                            label: 'Edit',
+                            onPressed: (context) {
+                              showDialog(
+                                context: context,
+                                builder: (context) => UpdateNoteWidget(
+                                  index: index,
+                                  model: noteController.notelist[index],
+                                ),
+                              );
+                            },
                           ),
-                        );
-                      },
-                    ),
-                    SlidableAction(
-                      backgroundColor: Colors.grey.shade700,
-                      icon: Icons.delete,
-                      label: 'Delete',
-                      onPressed: (context) => deleteNote(context, index),
-                    ),
-                  ],
+                          SlidableAction(
+                            backgroundColor: Colors.grey.shade700,
+                            icon: Icons.delete,
+                            label: 'Delete',
+                            onPressed: (context) => deleteNote(context, index),
+                          ),
+                        ],
+                      ),
+                      child: ListTile(
+                        leading: Checkbox(
+                          value: noteController.notelist[index].checkStatus ??
+                              false,
+                          onChanged: (value) {
+                            noteController.checkBoxChanged(
+                                noteController.notelist[index], value, index);
+                          },
+                        ),
+                        visualDensity: const VisualDensity(vertical: 1),
+                        tileColor: Colors.lightGreen,
+                        title: Text(noteController.notelist[index].note),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, index) => const Divider(),
                 ),
-                child: ListTile(
-                  leading: Checkbox(
-                    value: noteController.notelist[index].checkStatus ?? false,
-                    onChanged: (value) {
-                      noteController.checkBoxChanged(
-                          noteController.notelist[index], value, index);
-                    },
-                  ),
-                  visualDensity: const VisualDensity(vertical: 1),
-                  tileColor: Colors.lightGreen,
-                  title: Text(noteController.notelist[index].note),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-              );
-            },
-            separatorBuilder: (context, index) => const Divider(),
-          ),
         ),
       ),
     );

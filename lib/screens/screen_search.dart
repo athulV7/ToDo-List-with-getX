@@ -86,5 +86,12 @@ class SearchScreen extends StatelessWidget {
     //               element.note.toLowerCase().contains(typedKeyword.toLowerCase()),
     //         )
     //         .toList();
+    noteController.notelist = noteController.notesData.values
+        .where(
+          (element) =>
+              element.note.toLowerCase().contains(typedKeyword.toLowerCase()),
+        )
+        .toList();
+    noteController.update();
   }
 }

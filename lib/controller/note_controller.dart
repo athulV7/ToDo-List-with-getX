@@ -7,6 +7,7 @@ import 'package:todo_list_getx/model/note_model.dart';
 
 class NoteController extends GetxController {
   late Box<NoteModel> notesData;
+  
   NoteController() {
     getAllNotes();
   }
@@ -22,8 +23,8 @@ class NoteController extends GetxController {
   List<NoteModel> notelist = [];
 
   Future<void> addNote(NoteModel model) async {
-    final noteDB = await Hive.openBox<NoteModel>('notes_db');
-    await noteDB.add(model);
+    notesData = await Hive.openBox<NoteModel>('notes_db');
+    await notesData.add(model);
     getAllNotes();
     log('note added');
   }
