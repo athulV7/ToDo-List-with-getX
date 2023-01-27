@@ -9,5 +9,8 @@ class NoteModel {
   @HiveField(1)
   final String note;
 
-  NoteModel({required this.note, this.id});
+  @HiveField(2)
+  bool? checkStatus;
+
+  NoteModel({required this.note, this.id, this.checkStatus});
 }

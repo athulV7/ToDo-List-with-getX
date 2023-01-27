@@ -6,17 +6,15 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo_list_getx/model/note_model.dart';
 
 class NoteController extends GetxController {
+  late Box<NoteModel> notesData;
   NoteController() {
     getAllNotes();
   }
 
-  bool checkBoxValue = false;
-  checkBoxChanged() {
-    if (checkBoxValue == false) {
-      checkBoxValue = true;
-    } else {
-      checkBoxValue = false;
-    }
+  Future<void> checkBoxChanged(NoteModel model, value, int index) async {
+    model.checkStatus = value;
+    notesData.putAt(index, model);
+    getAllNotes();
     update();
   }
 
@@ -38,19 +36,19 @@ class NoteController extends GetxController {
   }
 
   Future<List<NoteModel>> getNote() async {
-    final notesData = await Hive.openBox<NoteModel>('notes_db');
+    notesData = await Hive.openBox<NoteModel>('notes_db');
     return notesData.values.toList();
   }
 
   Future<void> deleteNote(int index) async {
-    final noteDB = await Hive.openBox<NoteModel>('notes_db');
-    await noteDB.deleteAt(index);
+    notesData = await Hive.openBox<NoteModel>('notes_db');
+    await notesData.deleteAt(index);
     getAllNotes();
   }
 
   Future<void> updateNote(int index, NoteModel model) async {
-    final noteDB = await Hive.openBox<NoteModel>('notes_db');
-    noteDB.putAt(index, model);
+    notesData = await Hive.openBox<NoteModel>('notes_db');
+    notesData.putAt(index, model);
     getAllNotes();
   }
 }

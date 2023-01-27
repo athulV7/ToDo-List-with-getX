@@ -67,12 +67,13 @@ class ScreenHome extends StatelessWidget {
                   ],
                 ),
                 child: ListTile(
-                  // leading: Checkbox(
-                  //   value: noteController.checkBoxValue,
-                  //   onChanged: (value) {
-                  //     noteController.checkBoxChanged();
-                  //   },
-                  // ),
+                  leading: Checkbox(
+                    value: noteController.notelist[index].checkStatus ?? false,
+                    onChanged: (value) {
+                      noteController.checkBoxChanged(
+                          noteController.notelist[index], value, index);
+                    },
+                  ),
                   visualDensity: const VisualDensity(vertical: 1),
                   tileColor: Colors.lightGreen,
                   title: Text(noteController.notelist[index].note),
